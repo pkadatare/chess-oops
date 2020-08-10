@@ -19,28 +19,34 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.CollectionUtils;
 
 @Slf4j
-public class IOService {
+public class DriverService {
 
   public static final String SPACE = " ";
   private boolean isContinue = true;
   private Board board;
   private static Scanner sc = new Scanner(System.in);
 
-  public IOService(){
+  public DriverService() {
     board = new Board();
   }
 
   public void takeUserInput() {
-    while(isContinue) {
+    while (isContinue) {
       log.info("\nPlease enter current piece and position. Eg. King D5");
       String input = sc.nextLine();
       log.info("Your input is : " + input);
-      Set<String> output = processUserInput(input);
-      log.info("Your output is : " +
-          output.stream().collect(Collectors.joining(",")));
-      log.info("\nFor continue press 1 else press 0");
-      isContinue = (1 == sc.nextInt());
-      sc.nextLine();
+      try {
+        Set<String> output = processUserInput(input);
+
+        log.info("Your output is : " +
+            output.stream().collect(Collectors.joining(",")));
+        log.info("\nFor continue press 1 else press 0");
+        isContinue = (1 == sc.nextInt());
+        sc.nextLine();
+      } catch (Exception e) {
+        log.error("Exception occurred please enter valid input", e.getMessage());
+      }
+
     }
   }
 

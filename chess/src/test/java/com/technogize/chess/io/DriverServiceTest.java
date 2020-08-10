@@ -11,12 +11,13 @@ import java.util.HashSet;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 
-class IOServiceTest {
+class DriverServiceTest {
+
+  DriverService service = new DriverService();
 
 
   @Test
   void inputValidationForInvalidPiece() {
-    IOService service = new IOService();
     Exception exception = assertThrows(IllegalArgumentException.class, () -> {
       service.getInitialPosition("Kid D5");
     });
@@ -29,7 +30,6 @@ class IOServiceTest {
 
   @Test
   void inputValidationForInvalidPositionY() {
-    IOService service = new IOService();
     Exception exception = assertThrows(IllegalArgumentException.class, () -> {
       service.getInitialPosition("Kid D9");
     });
@@ -42,7 +42,6 @@ class IOServiceTest {
 
   @Test
   void inputValidationForInvalidPositionX() {
-    IOService service = new IOService();
     Exception exception = assertThrows(IllegalArgumentException.class, () -> {
       service.getInitialPosition("Kid K5");
     });
@@ -55,7 +54,6 @@ class IOServiceTest {
 
   @Test
   void getInitialPosition() {
-    IOService service = new IOService();
     Spot spot = service.getInitialPosition("King A5");
     assertEquals(3,spot.getPosition().getX());
     assertEquals(0,spot.getPosition().getY());
@@ -65,21 +63,18 @@ class IOServiceTest {
 
   @Test
   void processUserInput() {
-    IOService service = new IOService();
     Set<String> spot = service.processUserInput("Pawn D5");
     assertEquals(1, spot.size());
   }
 
   @Test
   void getInitialPositionPawnTestNoMove() {
-    IOService service = new IOService();
     Set<String> output = service.processUserInput("Pawn E8");
     assertTrue(output.isEmpty());
   }
 
   @Test
   void getInitialPositionPawnTestMove() {
-    IOService service = new IOService();
     Set<String> output = service.processUserInput("Pawn E7");
     assertEquals(1, output.size());
     assertTrue(output.contains("E8"));
@@ -87,7 +82,6 @@ class IOServiceTest {
 
   @Test
   void getInitialPositionHorseTestMove() {
-    IOService service = new IOService();
     Set<String> output = service.processUserInput("Horse E3");
     Set<String> expectedOutPut = new HashSet<>(Arrays.asList("F5",	"G4",	"G2",	"F1",	"D1",	"C2",	"C4",	"D5"));
     assertEquals(8, output.size());
@@ -97,7 +91,6 @@ class IOServiceTest {
 
   @Test
   void getInitialPositionKingTestMove() {
-    IOService service = new IOService();
     Set<String> output = service.processUserInput("King D5");
     assertEquals(8, output.size());
     Set<String> expectedOutPut = new HashSet<>(Arrays.asList("D6","E6","E5","E4","D4","C4","C5","C6"));
@@ -106,21 +99,18 @@ class IOServiceTest {
 
   @Test
   void getInitialPositionBishopTestMove() {
-    IOService service = new IOService();
     Set<String> output = service.processUserInput("Bishop D5");
     assertEquals(13, output.size());
   }
 
   @Test
   void getInitialPositionRookTestMove() {
-    IOService service = new IOService();
     Set<String> output = service.processUserInput("Rook D5");
     assertEquals(14, output.size());
   }
 
   @Test
   void getInitialPositionQueenTestMove() {
-    IOService service = new IOService();
     Set<String> output = service.processUserInput("Queen D5");
     assertEquals(27, output.size());
   }
